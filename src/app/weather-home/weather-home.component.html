@@ -1,0 +1,267 @@
+<!-- <p>weather-home works!</p> -->
+<body >
+<!-- <label>Please Enter your Location</label>
+<input name="" type="text" [(ngModel)]="location"  class="form-control">
+<button (click)="GetWeather()">Continue</button>
+{{location}} -->
+<div class="main">
+    <label>Please Enter your Location</label>
+    <input name="" type="text" [(ngModel)]="location"  class="form-control" style="height:24px;">
+    <button (click)="GetWeather()" style="height:24px;">Continue</button>   
+</div>
+<div class="location-and-date" *ngIf="WeatherList">
+    <h1 class="location-and-date__location">{{location}}</h1>
+    <div>{{date}}</div>
+  </div>
+
+
+  <div class="current-temperature" *ngIf="WeatherList" >
+    <div class="current-temperature__icon-container">
+      <img src="assets/assets/icons/mostly-sunny.jpg" class="current-temperature__icon" alt="">
+    </div>
+    <!-- alt+0176 -->
+    <div class="current-temperature__content-container">
+      <div class="current-temperature__value">{{tempCelcious}}°C</div>
+      <div class="current-temperature__summary">{{description}}</div>
+
+    </div>
+  </div>
+
+
+  <div class="current-stats" *ngIf="WeatherList">
+    <div>
+      <div class="current-stats__value">{{TempMax}}°C</div>
+      <div class="current-stats__label">High</div>
+      <div class="current-stats__value">{{TempMin}}°C</div>
+      <div class="current-stats__label">Low</div>
+    </div>
+    <!-- <div>
+      <div class="current-stats__value">7mph</div>
+      <div class="current-stats__label">Wind</div>
+      <div class="current-stats__value">0%</div>
+      <div class="current-stats__label">Rain</div>
+    </div> -->
+    <div>
+      <div class="current-stats__value">{{SunRise_time}}</div>
+      <div class="current-stats__label">Sunrise</div>
+      <div class="current-stats__value">{{SunSet_time}}</div>
+      <div class="current-stats__label">Sunset</div>
+    </div>
+  </div>
+
+  <div class="weather-by-hour" *ngIf="WeatherList">
+    <h2 class="weather-by-hour__heading">Today's weather</h2>
+    <div class="weather-by-hour__container">
+      <div class="weather-by-hour__item" *ngFor="let time of times;">
+        <div class="weather-by-hour__hour" >{{time.dt_txt|date:'shortTime'}}</div>
+        <!-- <img src="src/assets/assets/icons/mostly-sunny.svg" alt="Mostly sunny"> -->
+        <div>{{time.main.temp}}</div>
+      </div>
+      <!-- <div class="weather-by-hour__item">
+        <div class="weather-by-hour__hour">6am</div>
+        <img src="assets/assets/icons/mostly-sunny.svg" alt="Mostly sunny">
+        <div>16&deg;</div>
+      </div> -->
+      <!-- <div class="weather-by-hour__item">
+        <div class="weather-by-hour__hour">9am</div>
+        <img src="assets/icons/mostly-sunny.svg" alt="Mostly sunny">
+        <div>17&deg;</div>
+      </div>
+      <div class="weather-by-hour__item">
+        <div class="weather-by-hour__hour">12pm</div>
+        <img src="assets/icons/mostly-sunny.svg" alt="Mostly sunny">
+        <div>19&deg;</div>
+      </div>
+      <div class="weather-by-hour__item">
+        <div class="weather-by-hour__hour">3pm</div>
+        <img src="assets/icons/sunny.svg" alt="Sunny">
+        <div>21&deg;</div>
+      </div>
+      <div class="weather-by-hour__item">
+        <div class="weather-by-hour__hour">6pm</div>
+        <img src="assets/icons/sunny.svg" alt="Sunny">
+        <div>20&deg;</div>
+      </div>
+      <div class="weather-by-hour__item">
+        <div class="weather-by-hour__hour">9pm</div>
+        <img src="assets/icons/mostly-sunny.svg" alt="Mostly sunny">
+        <div>18&deg;</div>
+      </div> -->
+    </div>
+  </div>
+
+
+  <div class="next-5-days" *ngIf="WeatherList">
+    <h2 class="next-5-days__heading" style="margin-right: 2px;">Next 5 days</h2>
+    <div class="next-5-days__container" *ngFor="let item of list">
+
+      <div class="next-5-days__row" >
+       
+        <div class="next-5-days__date">
+          {{item.dt_txt|date:'EEE'}} 
+          {{item.dt_txt|date:'shortTime'}} 
+
+          <div class="next-5-days__label">{{item.dt_txt|date:'MM-dd-yyyy'}}</div>
+        </div>
+        <div class="next-5-days__low">
+          {{item.main.temp}}°C
+             <!-- <div class="next-5-days__label">Low</div> -->
+           </div>
+        <div class="next-5-days__low">
+       {{item.main.temp_min}}°C
+          <div class="next-5-days__label">Low</div>
+        </div>
+
+        <div class="next-5-days__high">
+          {{item.main.temp_max}}°C
+          <div class="next-5-days__label">High</div>
+        </div>
+
+        <!-- <div class="next-5-days__icon">
+          <img src="icons/sunny.jpg" alt="Sunny">
+        </div> -->
+<!-- 
+        <div class="next-5-days__rain">
+         
+          <div class="next-5-days__label"> {{item.weather.description}}</div>
+        </div> -->
+
+        <!-- <div class="next-5-days__wind">
+          12mph
+          <div class="next-5-days__label">Wind</div>
+        </div> --> 
+
+      </div>
+      <!-- <div class="next-5-days__row">
+
+        <div class="next-5-days__date">
+          Wed
+          <div class="next-5-days__label">31/7</div>
+        </div>
+
+        <div class="next-5-days__low">
+          9&deg;
+          <div class="next-5-days__label">Low</div>
+        </div>
+
+        <div class="next-5-days__high">
+          18&deg;
+          <div class="next-5-days__label">High</div>
+        </div>
+
+        <div class="next-5-days__icon">
+          <img src="icons/mostly-sunny.jpg" alt="Mostly sunny">
+        </div>
+
+        <div class="next-5-days__rain">
+          3%
+          <div class="next-5-days__label">Rain</div>
+        </div>
+
+        <div class="next-5-days__wind">
+          7mph
+          <div class="next-5-days__label">Wind</div>
+        </div>
+
+      </div>
+      <div class="next-5-days__row">
+
+        <div class="next-5-days__date">
+          Thur
+          <div class="next-5-days__label">1/8</div>
+        </div>
+
+        <div class="next-5-days__low">
+          7&deg;
+          <div class="next-5-days__label">Low</div>
+        </div>
+
+        <div class="next-5-days__high">
+          15&deg;
+          <div class="next-5-days__label">High</div>
+        </div>
+
+        <div class="next-5-days__icon">
+          <img src="icons/mostly-sunny.svg" alt="Mostly sunny">
+        </div>
+
+        <div class="next-5-days__rain">
+          75%
+          <div class="next-5-days__label">Rain</div>
+        </div>
+
+        <div class="next-5-days__wind">
+          11mph
+          <div class="next-5-days__label">Wind</div>
+        </div>
+
+      </div> -->
+      <!-- <div class="next-5-days__row">
+
+        <div class="next-5-days__date">
+          Tue
+          <div class="next-5-days__label">2/8</div>
+        </div>
+
+        <div class="next-5-days__low">
+          12&deg;
+          <div class="next-5-days__label">Low</div>
+        </div>
+
+        <div class="next-5-days__high">
+          24&deg;
+          <div class="next-5-days__label">High</div>
+        </div>
+
+        <div class="next-5-days__icon">
+          <img src="icons/sunny.svg" alt="Sunny">
+        </div>
+
+        <div class="next-5-days__rain">
+          2%
+          <div class="next-5-days__label">Rain</div>
+        </div>
+
+        <div class="next-5-days__wind">
+          8mph
+          <div class="next-5-days__label">Wind</div>
+        </div>
+
+      </div>
+      <div class="next-5-days__row">
+
+        <div class="next-5-days__date">
+          Tue
+          <div class="next-5-days__label">30/7</div>
+        </div>
+
+        <div class="next-5-days__low">
+          10&deg;
+          <div class="next-5-days__label">Low</div>
+        </div>
+
+        <div class="next-5-days__high">
+          21&deg;
+          <div class="next-5-days__label">High</div>
+        </div>
+
+        <div class="next-5-days__icon">
+          <img src="icons/mostly-sunny.svg" alt="Mostly sunny">
+        </div>
+
+        <div class="next-5-days__rain">
+          0%
+          <div class="next-5-days__label">Rain</div>
+        </div>
+
+        <div class="next-5-days__wind">
+          12mph
+          <div class="next-5-days__label">Wind</div>
+        </div>
+
+      </div> -->
+
+    </div>
+  </div>
+
+</body>
